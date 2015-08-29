@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.goeuro.goeurotest.controller.HomeController;
 import com.goeuro.goeurotest.dto.Place;
 import com.goeuro.goeurotest.views.GoEuroAutoCompleteTextView;
 import com.goeuro.goeurotest.views.PlaceAutoCompleteAdapter;
@@ -61,6 +62,12 @@ public class MainActivityFragment extends Fragment {
     public MainActivityFragment() {
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        HomeController.getInstance(getActivity()).stopLocationUpdates();
+    }
 
     @AfterViews
     public void onViewsLoaded() {

@@ -11,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/margin_default"
-        android:gravity="center|left"
-        android:text="test1234"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:gravity="center|start"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/fbutton_color_wet_asphalt" />
 
 
 </LinearLayout>

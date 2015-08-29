@@ -4,27 +4,30 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.goeuro.goeurotest.R;
+import com.goeuro.goeurotest.controller.HomeController;
 import com.goeuro.goeurotest.dto.Place;
-import com.goeuro.goeurotest.services.ServiceManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class PlaceAutoCompleteAdapter extends BaseAdapter implements Filterable {
 
     private static final int MAX_RESULTS = 10;
     private Context mContext;
+    HomeController homeController;
     private List<Place> resultList = new ArrayList<>();
 
     public PlaceAutoCompleteAdapter(Context context) {
         mContext = context;
+        homeController = HomeController.getInstance(context);
     }
 
     @Override
@@ -52,6 +55,9 @@ public class PlaceAutoCompleteAdapter extends BaseAdapter implements Filterable 
 
         String text = String.format("%s (%s)", getItem(position).getName(), getItem(position).getCountry());
         ((TextView) convertView.findViewById(R.id.place_name)).setText(text);
+
+        LayoutAnimationController controller = new LayoutAnimationController(AnimationUtils.loadAnimation(mContext, R.anim.enter_animation));
+        parent.setLayoutAnimation(controller);
         return convertView;
     }
 
@@ -89,7 +95,7 @@ public class PlaceAutoCompleteAdapter extends BaseAdapter implements Filterable 
      */
     private List<Place> findPlaces(Context context, String placeName) {
 
-        List<Place> results = ServiceManager.getInstance().getSuggestedPlaces(Locale.getDefault().getLanguage(), placeName);
+        List<Place> results = homeController.findPlaces(placeName);
 
         return results;
     }
